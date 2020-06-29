@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  nutrow-query-job:
+    image: nutrow-query-flink:latest
+    command: flink run --jobmanager jobmanager:8081 /app/app.jar
+    restart: no
+    networks:
+      - dim3
+
+networks:
+  dim3:
+    external: true
