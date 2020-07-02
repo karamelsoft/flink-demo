@@ -2,4 +2,5 @@ FROM flink
 
 WORKDIR /app
 
-ADD $JAR_FILE ./app.jar
+ARG JAR_FILE
+ADD target/${JAR_FILE} app.jar

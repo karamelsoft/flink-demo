@@ -1,11 +1,6 @@
 PROJECT=flink_infra
 
-swarm-configure:
-	docker swarm init ;\
-	docker network create -d overlay --attachable flink ;\
-	docker-compose pull
-
-swarm-deploy: swarm-configure
+swarm-deploy:
 	docker stack deploy -c docker-compose.yml ${PROJECT}
 
 k8s-deploy:
