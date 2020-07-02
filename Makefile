@@ -1,12 +1,29 @@
 PROJECT=flink-lab
 
+clean:
+	./mvnw clean
+
+compile:
+	./mvnw compile test-compile
+
+test:
+	./mvnw test
+
+package:
+	./mvnw package -Pbuild-jar
+
 swarm-configure:
-	docker swarm init ;\
-	docker network create -d overlay --attachable dim3 ;\
-	docker-compose pull
+	${MAKE} -C infrastructure swarm-configure
+
+docker-build:
+	${MAKE} -C wordcount docker-build
 
 swarm-deploy: swarm-configure
-	docker stack deploy -c docker-compose.yml ${PROJECT}
+	${MAKE} -C infrastructure swarm-deploy
+	${MAKE} -C wordcount swarm-deploy
 
 swarm-destroy:
-	docker stack rm ${PROJECT}
+	${MAKE} -C wordcount swarm-destroy
+	${MAKE} -C infrastructure swarm-destroy
+
+swarm-redeploy: swarm-destroy docker-build swarm-deploy

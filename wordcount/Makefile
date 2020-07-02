@@ -1,13 +1,13 @@
-PROJECT=flink-job
+PROJECT=flink_wordcount
 
 clean:
-	./mvnw clean
+	mvn clean
 
-jar:
-	./mvnw package -Pbuild-jar
+package:
+	mvn package -Pbuild-jar
 
 docker-build:
-	docker build . -t nutrow-query-flink:latest
+	mvn package -Pbuild-jar -Pdocker
 
 swarm-deploy:
 	docker stack deploy -c docker-compose.yml ${PROJECT}

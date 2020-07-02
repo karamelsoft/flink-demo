@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+
+  jobmanager:
+    image: flink:latest
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    networks:
+      - flink
+
+  taskmanager:
+    image: flink:latest
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    networks:
+      - flink
+    deploy:
+      mode: replicated
+      replicas: 3
+
+networks:
+  flink:
+    external: true

@@ -1,4 +1,4 @@
-package com.dim3.nutrow.query.flink
+package com.karamelsoft.flink.wordcount
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
